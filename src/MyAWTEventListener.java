@@ -16,7 +16,7 @@ public class MyAWTEventListener implements AWTEventListener {
     int open = 0;
     JTextField  output;
     int t = 0;
-    ArrayList<Integer> testFile = new ArrayList<Integer>();
+    ArrayList<Integer> testFile = new ArrayList<>();
 
     @Override
     public void eventDispatched(AWTEvent event) {

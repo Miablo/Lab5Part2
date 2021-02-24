@@ -14,6 +14,9 @@ public class Main {
         Toolkit tk = Toolkit.getDefaultToolkit();
         MyAWTEventListener listener = new MyAWTEventListener();
         tk.addAWTEventListener(listener, AWTEvent.MOUSE_EVENT_MASK);
+        MyGUItester tester = new MyGUItester();
+        tester.createWindow();
+
         MyGUI gui = new MyGUI();
         gui.setSize(400, 300);
         gui.setVisible(true);
