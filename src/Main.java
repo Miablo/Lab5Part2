@@ -1,8 +1,5 @@
 import gui.MyGUI;
 
-import java.awt.*;
-import java.awt.event.AWTEventListener;
-
 /**
  * Testing GUI
  *
@@ -10,15 +7,20 @@ import java.awt.event.AWTEventListener;
  * @version 1.0
  */
 public class Main {
-    public static void main(String[] args) {
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        MyAWTEventListener listener = new MyAWTEventListener();
-        tk.addAWTEventListener(listener, AWTEvent.MOUSE_EVENT_MASK);
-        MyGUItester tester = new MyGUItester();
-        tester.createWindow();
 
+    public static void main(String[] args) {
         MyGUI gui = new MyGUI();
         gui.setSize(400, 300);
         gui.setVisible(true);
+
+        MyGUItester tester = new MyGUItester();
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                tester.createWindow();
+            }
+        });
     }
+
+
 }
