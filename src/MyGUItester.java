@@ -3,6 +3,8 @@
 Complete an animated GUI testing tool for the previous GUI.jar file.
 Run the first 10 test cases that were prepared by your team last week
  */
+import gui.MyGUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -103,6 +105,21 @@ public class MyGUItester extends JFrame {
         };
         Thread t = new Thread(r);
         t.start();
+    }
+
+    public void initGUI(){
+        // Creates GUI Window for arithmetic
+        MyGUI gui = new MyGUI();
+        gui.setSize(400, 300);
+        gui.setVisible(true);
+        // Creates window for gui tester in upper left hand corner
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                MyGUItester tester;
+                tester = new MyGUItester();
+                tester.createWindow();
+            }
+        });
     }
 
 }

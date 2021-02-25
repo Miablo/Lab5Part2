@@ -8,19 +8,10 @@ import gui.MyGUI;
  */
 public class Main {
 
-    public static void main(String[] args) {
-        // Creates GUI Window for arithmetic
-        MyGUI gui = new MyGUI();
-        gui.setSize(400, 300);
-        gui.setVisible(true);
-        // Creates window for gui tester in upper left hand corner
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                MyGUItester tester;
-                tester = new MyGUItester();
-                tester.createWindow();
-            }
-        });
-    }
+  // placeholder code for now
+  public static void main(String[] args) {
+      MyGUItester tester = new MyGUItester();
+      tester.initGUI();
+  }
 
 }
