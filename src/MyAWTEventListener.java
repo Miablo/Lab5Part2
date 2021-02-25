@@ -44,6 +44,7 @@ public class MyAWTEventListener implements AWTEventListener {
                 if (button.getText().equals("Play")){
                     System.out.println("Playing");
 
+
                 }
             }
             if(recording){

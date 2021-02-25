@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +32,7 @@ public class MyGUItester extends JFrame {
         }
         Toolkit tk = Toolkit.getDefaultToolkit();
         AWTEventListener listener = new MyAWTEventListener(alae);
-        tk.addAWTEventListener(listener, AWTEvent.MOUSE_EVENT_MASK+AWTEvent.MOUSE_MOTION_EVENT_MASK);
+        tk.addAWTEventListener(listener, AWTEvent.MOUSE_EVENT_MASK+AWTEvent.MOUSE_MOTION_EVENT_MASK+AWTEvent.KEY_EVENT_MASK);
     }
 
     /**
@@ -69,22 +70,37 @@ public class MyGUItester extends JFrame {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                robot.setAutoWaitForIdle(true);
                 for (AWTEvent event : alae) {
-                    Object o = event.getSource();
-                    MouseEvent me = (MouseEvent) event;
-                    KeyEvent ke = (KeyEvent) o;
-
-                    robot.setAutoWaitForIdle(true);
-                    System.out.println("This is in run");
-
-                    System.out.println(event);
-
+                    if (event.getID() == MouseEvent.MOUSE_MOVED) {
+                        MouseEvent me = (MouseEvent) event;
+                        Point p = me.getLocationOnScreen();
+                        robot.mouseMove(p.x, p.y);
+                        robot.delay(20);
+                        //System.out.println(event);
+                    }else if(event.getID() == 500){
+                        type(5);
+                    }
                 }
                 alae.removeAll(alae);
             }
         };
         Thread t = new Thread(r);
         t.start();
+    }
+
+    private void type(int i){
+        robot.delay(40);
+        robot.keyPress(i);
+        robot.keyRelease(i);
+    }
+
+    private void leftClick()
+    {
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.delay(200);
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        robot.delay(200);
     }
 
 }
