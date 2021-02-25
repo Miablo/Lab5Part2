@@ -61,6 +61,28 @@ public class MyGUItester extends JFrame {
         window.add(play);
         window.add(stop);
 
+        rec.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Recording Listener Activated");
+            }
+        });
+
+        play.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Play Action Activated");
+                playActionPerformed(e);
+            }
+        });
+
+        stop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Stop Listener Activated");
+            }
+        });
+
         window.setVisible(true);
         window.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -72,14 +94,13 @@ public class MyGUItester extends JFrame {
             public void run() {
                 robot.setAutoWaitForIdle(true);
                 for (AWTEvent event : alae) {
+                    System.out.println("I'm in the for loop for alae");
                     if (event.getID() == MouseEvent.MOUSE_MOVED) {
                         MouseEvent me = (MouseEvent) event;
                         Point p = me.getLocationOnScreen();
                         robot.mouseMove(p.x, p.y);
                         robot.delay(20);
-                        //System.out.println(event);
-                    }else if(event.getID() == 500){
-                        type(5);
+                        System.out.println(event);
                     }
                 }
                 alae.removeAll(alae);
@@ -87,20 +108,6 @@ public class MyGUItester extends JFrame {
         };
         Thread t = new Thread(r);
         t.start();
-    }
-
-    private void type(int i){
-        robot.delay(40);
-        robot.keyPress(i);
-        robot.keyRelease(i);
-    }
-
-    private void leftClick()
-    {
-        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(200);
-        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(200);
     }
 
 }

@@ -27,24 +27,16 @@ public class MyAWTEventListener implements AWTEventListener {
 
         if (event.getID() == MouseEvent.MOUSE_CLICKED) {
             Object o = event.getSource();
-            if(o instanceof JTextField){
-                JTextField jtf = (JTextField) o;
-                int val = Integer.parseInt(jtf.getText());
-            }
 
             if(o instanceof JButton){
                 JButton button = (JButton)o;
                 if(button.getText().equals("Record")){
                     recording = true;
-                    System.out.println("True");
-                } else if(button.getText().equals("Stop")){
+                    System.out.println("Recording is true");
+                    alae.add(event);
+                } else if (button.getText().equals("Stop")){
                     recording = false;
                     System.out.println("I stopped recording.");
-                }
-                if (button.getText().equals("Play")){
-                    System.out.println("Playing");
-
-
                 }
             }
             if(recording){

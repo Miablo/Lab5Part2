@@ -19,10 +19,8 @@ public class Main {
                 System.out.println("I started running.");
                 tester = new MyGUItester();
                 tester.createWindow();
-                tester.pack();
             }
         });
     }
-
 
 }
