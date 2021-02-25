@@ -21,8 +21,8 @@ public class MyGUItester extends JFrame {
     public static JButton play; // The “Play” button executes the recorded steps based on the same time progression.
     public static JButton stop; // The “Stop” button terminates the recording.
 
-    ArrayList<AWTEvent> alae = new ArrayList<>();
-    Robot robot;
+    ArrayList<AWTEvent> alae = new ArrayList<>(); // holds all events recorded
+    Robot robot; // robot used to perform keyboard / mouse actions based on events recorded
 
     public MyGUItester() {
         try{
@@ -32,7 +32,7 @@ public class MyGUItester extends JFrame {
         }
         Toolkit tk = Toolkit.getDefaultToolkit();
         AWTEventListener listener = new MyAWTEventListener(alae);
-        tk.addAWTEventListener(listener, AWTEvent.MOUSE_EVENT_MASK+AWTEvent.MOUSE_MOTION_EVENT_MASK+AWTEvent.KEY_EVENT_MASK);
+        tk.addAWTEventListener(listener, AWTEvent.MOUSE_EVENT_MASK+AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
 
     /**
@@ -43,9 +43,10 @@ public class MyGUItester extends JFrame {
         JFrame window = new JFrame("My GUI Tester"); // The window includes three buttons: “Record”, “Stop” and “Play”.
 
         window.setLocation(0,0); // Your tool window is placed at the upper left corner of the screen.
-        window.setResizable(false);
+        window.setResizable(false); // dont allow resize of test window
         window.setLayout(null);
-        window.setSize(280, 60);
+        window.setSize(280, 60); // set size
+        window.setLocation(0,0);
 
         // button record
         rec = new JButton("Record");
@@ -57,52 +58,46 @@ public class MyGUItester extends JFrame {
         stop = new JButton("Stop");
         stop.setBounds(180, 0, 100, 30);
 
+        // Add buttons to GUI Window
         window.add(rec);
         window.add(play);
         window.add(stop);
 
         rec.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Recording Listener Activated");
-            }
-        });
+            public void actionPerformed(ActionEvent e) { }});
 
+        // Play events when play is clicked
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Play Action Activated");
                 playActionPerformed(e);
             }
         });
 
         stop.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Stop Listener Activated");
-            }
-        });
+            public void actionPerformed(ActionEvent e) { }});
 
         window.setVisible(true);
         window.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     private void playActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                robot.setAutoWaitForIdle(true);
+                // Run all events recorded once play is clicked
                 for (AWTEvent event : alae) {
-                    System.out.println("I'm in the for loop for alae");
-                    if (event.getID() == MouseEvent.MOUSE_MOVED) {
-                        MouseEvent me = (MouseEvent) event;
+                    MouseEvent me = (MouseEvent) event;
+                    if (event.getID() == MouseEvent.MOUSE_CLICKED) {
+                        int click = me.getButton();
                         Point p = me.getLocationOnScreen();
                         robot.mouseMove(p.x, p.y);
                         robot.delay(20);
-                        System.out.println(event);
                     }
                 }
+                // Remove all events once played
                 alae.removeAll(alae);
             }
         };

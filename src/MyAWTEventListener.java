@@ -24,7 +24,6 @@ public class MyAWTEventListener implements AWTEventListener {
 
     @Override
     public void eventDispatched(AWTEvent event) {
-
         if (event.getID() == MouseEvent.MOUSE_CLICKED) {
             Object o = event.getSource();
 
@@ -32,19 +31,15 @@ public class MyAWTEventListener implements AWTEventListener {
                 JButton button = (JButton)o;
                 if(button.getText().equals("Record")){
                     recording = true;
-                    System.out.println("Recording is true");
-                    alae.add(event);
+
                 } else if (button.getText().equals("Stop")){
                     recording = false;
-                    System.out.println("I stopped recording.");
                 }
             }
+
             if(recording){
-                System.out.println("Added Event");
                 alae.add(event);
             }
-
-
         }
 
     }
