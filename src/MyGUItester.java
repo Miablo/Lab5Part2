@@ -5,9 +5,7 @@ Run the first 10 test cases that were prepared by your team last week
  */
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.AWTEventListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,17 +70,18 @@ public class MyGUItester extends JFrame {
             @Override
             public void run() {
                 for (AWTEvent event : alae) {
-                    if (event.getID() == MouseEvent.MOUSE_MOVED) {
-                        MouseEvent me = (MouseEvent) event;
-                        Point p = me.getLocationOnScreen();
-                        robot.mouseMove(p.x, p.y);
-                        robot.delay(20);
-                        //System.out.println(event);
-                    }
+                    Object o = event.getSource();
+                    MouseEvent me = (MouseEvent) event;
+                    KeyEvent ke = (KeyEvent) o;
+
+                    robot.setAutoWaitForIdle(true);
+                    System.out.println("This is in run");
+
+                    System.out.println(event);
+
                 }
                 alae.removeAll(alae);
             }
-
         };
         Thread t = new Thread(r);
         t.start();

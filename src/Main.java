@@ -13,11 +13,13 @@ public class Main {
         gui.setSize(400, 300);
         gui.setVisible(true);
 
-        MyGUItester tester = new MyGUItester();
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                MyGUItester tester;
+                System.out.println("I started running.");
+                tester = new MyGUItester();
                 tester.createWindow();
+                tester.pack();
             }
         });
     }
