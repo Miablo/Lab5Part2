@@ -26,6 +26,9 @@ public class MyGUItester extends JFrame {
     ArrayList<AWTEvent> alae = new ArrayList<>(); // holds all events recorded
     Robot robot; // robot used to perform keyboard / mouse actions based on events recorded
 
+    /**
+     * Constructor
+     */
     public MyGUItester() {
         try{
             robot = new Robot();
@@ -85,7 +88,7 @@ public class MyGUItester extends JFrame {
         window.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    private void playActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void playActionPerformed(ActionEvent evt) {
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -108,6 +111,9 @@ public class MyGUItester extends JFrame {
         t.start();
     }
 
+    /**
+     * Creates GUI windows for program and tester window
+     */
     public void initGUI(){
         // Creates GUI Window for arithmetic
         MyGUI gui = new MyGUI();

@@ -25,6 +25,11 @@ public class MyAWTEventListener implements AWTEventListener {
     int t = 0;
     static int i = 0;
 
+    /**
+     * Constructor for AWTEventListener
+     *
+     * @param alae arraylist holding events
+     */
     public MyAWTEventListener(ArrayList<AWTEvent> alae) {
         this.alae = alae;
     }
@@ -101,7 +106,7 @@ public class MyAWTEventListener implements AWTEventListener {
     private void openFile() {
         FileReader file;
         try {
-            file = new FileReader("E:\\Sweng431\\Lab5Part2\\.idea\\input.txt"); // will need to change file stream to file location on computer.
+            file = new FileReader("/Users/miablo/Desktop/input.txt"); // will need to change file stream to file location on computer.
             int i;
             StringBuilder temp = new StringBuilder(); //sets empty string
             while((i = file.read()) != -1) { //reads its char
@@ -121,4 +126,3 @@ public class MyAWTEventListener implements AWTEventListener {
     }
 
 }
-
