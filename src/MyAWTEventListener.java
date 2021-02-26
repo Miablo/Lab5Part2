@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.AWTEventListener;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,16 +15,20 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class MyAWTEventListener implements AWTEventListener {
-    JTextField  output;
+    static JTextField  output;
+    static JTextField input1;
+    static JTextField input2;
     boolean recording = false;
     ArrayList alae;
-    ArrayList<Integer> testFile = new ArrayList<Integer>();
+    static ArrayList<Integer> testFile = new ArrayList<Integer>();
     int open = 0;
     int t = 0;
+    static int i = 0;
 
     public MyAWTEventListener(ArrayList<AWTEvent> alae) {
         this.alae = alae;
     }
+
 
     @Override
     public void eventDispatched(AWTEvent event) {
@@ -33,7 +38,6 @@ public class MyAWTEventListener implements AWTEventListener {
         }
         if (event.getID() == MouseEvent.MOUSE_CLICKED) {
             Object o = event.getSource();
-
             if(o instanceof JButton){
                 JButton button = (JButton)o;
                 if(button.getText().equals("Record")){
@@ -55,7 +59,12 @@ public class MyAWTEventListener implements AWTEventListener {
                     jtf.setText(String.valueOf(testFile.get(t)));// prints from list
                     if(jtf.getY() < 175) { // not last box or output box check
                         t++;
-                    } else if (jtf.getY() >= 175) {// last box or output box check
+                    }
+                    if (jtf.getY() >= 30 && jtf.getY() < 107 ) {
+                        input1 = jtf;
+                    }else if (jtf.getY() >= 107 && jtf.getY() < 175 ){
+                        input2 = jtf;
+                    }else if (jtf.getY() >= 175) {// last box or output box check
                         output = jtf;
                     }
                 }
@@ -69,12 +78,30 @@ public class MyAWTEventListener implements AWTEventListener {
     }
 
     /**
+     * used to add text with clicks from robot in MyGUItester
+     * @param clicky pulls Y LOCATION OF ROBOTS MOVED
+     */
+    public static void recordClick(int clicky){
+        if(clicky >= 30 && clicky <94){
+            input1.setText(String.valueOf(testFile.get(i)));
+            i++;
+        }else if (clicky >= 107 && clicky < 171){
+            input2.setText(String.valueOf(testFile.get(i)));
+            i++;
+        }else if (clicky >= 175 && clicky < 239){
+            output.setText(String.valueOf(testFile.get(i)));
+            i++;
+        }
+    }
+
+
+    /**
      * Here to open file and save integer to testFile list.
      */
     private void openFile() {
         FileReader file;
         try {
-            file = new FileReader("E:\\Sweng431\\Lab4Part3\\.idea\\input.txt"); // will need to change file stream to file location on computer.
+            file = new FileReader("E:\\Sweng431\\Lab5Part2\\.idea\\input.txt"); // will need to change file stream to file location on computer.
             int i;
             StringBuilder temp = new StringBuilder(); //sets empty string
             while((i = file.read()) != -1) { //reads its char

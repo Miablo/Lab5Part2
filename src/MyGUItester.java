@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Mio Diaz, Cody
+ * @author Mio Diaz, Cody Walker
  * @version 1.0
  */
 public class MyGUItester extends JFrame {
@@ -96,7 +96,8 @@ public class MyGUItester extends JFrame {
                         int click = me.getButton();
                         Point p = me.getLocationOnScreen();
                         robot.mouseMove(p.x, p.y);
-                        robot.delay(20);
+                        MyAWTEventListener.recordClick((int)p.getY());
+                        robot.delay(800);
                     }
                 }
                 // Remove all events once played
