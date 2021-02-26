@@ -17,6 +17,9 @@ public class MyAWTEventListener implements AWTEventListener {
     JTextField  output;
     boolean recording = false;
     ArrayList alae;
+    ArrayList<Integer> testFile = new ArrayList<Integer>();
+    int open = 0;
+    int t = 0;
 
     public MyAWTEventListener(ArrayList<AWTEvent> alae) {
         this.alae = alae;
@@ -24,6 +27,10 @@ public class MyAWTEventListener implements AWTEventListener {
 
     @Override
     public void eventDispatched(AWTEvent event) {
+        if(open != -1){
+            openFile();
+            open--;
+        }
         if (event.getID() == MouseEvent.MOUSE_CLICKED) {
             Object o = event.getSource();
 
@@ -34,6 +41,23 @@ public class MyAWTEventListener implements AWTEventListener {
 
                 } else if (button.getText().equals("Stop")){
                     recording = false;
+                }else if (button.getText().equals("OK")){
+                    if (Integer.parseInt(output.getText()) == testFile.get(t)) { // check if output is same as expected value and prints pass or failed accordingly
+                        System.out.println(testFile.get(t-2) + " + " + testFile.get(t-1) + " = " + testFile.get(t) + " Pass");
+                    } else {
+                        System.out.println(testFile.get(t-2) + " + " + testFile.get(t-1) + " = " + testFile.get(t) +" Failed got " + output.getText() );
+                    }
+                    t++;
+                }
+            }else if (o instanceof JTextField){
+                if(t < testFile.size()){
+                    JTextField jtf = (JTextField) o; // give jtf the field of clicked box
+                    jtf.setText(String.valueOf(testFile.get(t)));// prints from list
+                    if(jtf.getY() < 175) { // not last box or output box check
+                        t++;
+                    } else if (jtf.getY() >= 175) {// last box or output box check
+                        output = jtf;
+                    }
                 }
             }
 
@@ -44,7 +68,30 @@ public class MyAWTEventListener implements AWTEventListener {
 
     }
 
-
+    /**
+     * Here to open file and save integer to testFile list.
+     */
+    private void openFile() {
+        FileReader file;
+        try {
+            file = new FileReader("E:\\Sweng431\\Lab4Part3\\.idea\\input.txt"); // will need to change file stream to file location on computer.
+            int i;
+            StringBuilder temp = new StringBuilder(); //sets empty string
+            while((i = file.read()) != -1) { //reads its char
+                if(Character.isDigit((char) i)) { //check if is number
+                    temp.append((char) i); // adds temp
+                }else if (Character.isWhitespace((char)i) && !temp.toString().equals("")){ //check if next is whitespace and temp is not empty
+                    testFile.add(Integer.valueOf(temp.toString())); //adds temp to arraylist
+                    temp = new StringBuilder(); // empty temp out
+                }
+            }
+            if(!temp.toString().equals("")){ // verify last integer is add to array
+                testFile.add(Integer.valueOf(temp.toString()));
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 
 }
 
